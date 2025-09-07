@@ -1,0 +1,130 @@
+{{ define "main" }}
+    <div class="archive-hero">
+        <h1>{{ .Title }}</h1>
+        <div class="divider" style="height: 10px;"></div>
+    </div>
+    
+    <div class="archived-banner">
+        <p>This post has been archived. Information may not be up to date.</p>
+    </div>
+    
+    <article class="archive-post">
+        <section class="archive-post-header">
+            {{ if .Params.description }}
+                <p class="archive-post-subtitle">{{ .Params.description }}</p>
+            {{ end }}
+
+            <div class="archive-post-meta">
+                <span class="archive-post-date">📅 {{ .Date.Format "January 2, 2006" }}</span>
+                
+                {{ with .Params.tags }}
+                    <div class="archive-post-tags">
+                        🏷️ Tags:
+                        {{ range . }}
+                            <a href="{{ "tags/" | relURL }}{{ . | urlize }}/">{{ . }}</a>
+                        {{ end }}
+                    </div>
+                {{ end }}
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <div class="archive-post-content e-content">
+            {{ .Content }}
+        </div>
+        
+        <div class="divider"></div>
+
+        <div class="archive-post-navigation">
+            {{ if .PrevInSection }}
+                <a href="{{ .PrevInSection.Permalink }}" class="archive-prev-post">
+                    <span>⬅️ Previous: {{ .PrevInSection.Title }}</span>
+                </a>
+            {{ end }}
+
+            {{ if .NextInSection }}
+                <a href="{{ .NextInSection.Permalink }}" class="archive-next-post">
+                    <span>Next: {{ .NextInSection.Title }} ➡️</span>
+                </a>
+            {{ end }}
+        </div>
+    </article>
+
+    <!-- Related Posts Section -->
+    {{ $currentPage := . }}
+    {{ $tags := .Params.tags }}
+    {{ $relatedPosts := slice }}
+
+    {{ if $tags }}
+        {{ range $tag := $tags }}
+            {{ $tagRelated := where (where site.RegularPages "Type" "posts") "Params.tags" "intersect" (slice $tag) }}
+            {{ $relatedPosts = $relatedPosts | append $tagRelated }}
+        {{ end }}
+
+        {{ $relatedPosts = $relatedPosts | uniq }}
+        {{ $relatedPosts = where $relatedPosts "Permalink" "ne" $currentPage.Permalink }}
+
+        {{ if gt (len $relatedPosts) 0 }}
+            <div class="divider"></div>
+            
+            <section class="archive-related-posts">
+                <h2>⭐ Related Posts ⭐</h2>
+                <marquee scrollamount="3" direction="left">Check out these other awesome posts!</marquee>
+                <ul class="archive-related-posts-list">
+                    {{ range first 3 $relatedPosts }}
+                        <li class="archive-related-post-item">
+                            <a href="{{ .RelPermalink }}" class="archive-related-post-link">
+                                <span class="archive-related-post-title">{{ .Title }}</span>
+                                <span class="archive-related-post-date">{{ .Date.Format "January 2, 2006" }}</span>
+                            </a>
+                        </li>
+                    {{ end }}
+                </ul>
+            </section>
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ define "scripts" }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add decorative elements to the page
+            const content = document.querySelector('.archive-post-content');
+            if (content) {
+                // Add decorative elements at random positions in the content
+                const paragraphs = content.querySelectorAll('p');
+                if (paragraphs.length > 3) {
+                    // Add 2-3 random decorative elements
+                    const numElements = Math.floor(Math.random() * 2) + 2;
+                    for (let i = 0; i < numElements; i++) {
+                        const randomParagraphIndex = Math.floor(Math.random() * paragraphs.length);
+                        
+                        // Create a decorative element
+                        const decorElement = document.createElement('div');
+                        
+                        // Randomly choose between different types of decorative elements
+                        const elementType = Math.floor(Math.random() * 3);
+                        
+                        switch(elementType) {
+                            case 0:
+                                // Spinning text
+                                decorElement.innerHTML = '<div style="text-align: center; margin: 15px 0; font-weight: bold; color: #ff00ff;">✨ COOL STUFF ✨</div>';
+                                break;
+                            case 1:
+                                // "New" badge
+                                decorElement.innerHTML = '<div style="text-align: center; margin: 15px 0;"><span style="background-color: #ff0000; color: #ffffff; padding: 5px 10px; font-weight: bold; border: 2px solid #ffff00;">NEW!</span></div>';
+                                break;
+                            case 2:
+                                // Construction line
+                                decorElement.innerHTML = '<div style="text-align: center; margin: 15px 0; border: 2px dashed #ffff00; padding: 5px; color: #00ff00;">🚧 SECTION UNDER CONSTRUCTION 🚧</div>';
+                                break;
+                        }
+                        
+                        paragraphs[randomParagraphIndex].parentNode.insertBefore(decorElement, paragraphs[randomParagraphIndex].nextSibling);
+                    }
+                }
+            }
+        });
+    </script>
+{{ end }}
