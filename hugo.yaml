@@ -19,6 +19,10 @@ menus:
       identifier: posts
       url: /posts/
       weight: 2
+    - name: Subjects
+      identifier: subjects
+      url: /subjects/
+      weight: 3
 
 permalinks:
   posts: :section/:title

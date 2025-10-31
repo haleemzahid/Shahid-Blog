@@ -1,0 +1,105 @@
+{{ define "main" }}
+<div class="subjects-page">
+    <!-- Page Header -->
+    <header class="page-header">
+        <h1>{{ .Title }}</h1>
+        <p class="page-description">{{ .Description }}</p>
+        <div class="subjects-meta">
+            <a href="/subjects/today/" class="today-link">📅 View Today's Classes</a>
+        </div>
+    </header>
+
+    <!-- Day Filter Tabs -->
+    <div class="day-filter-tabs">
+        <button class="day-tab active" data-day="all">All Days</button>
+        <button class="day-tab" data-day="monday">Monday</button>
+        <button class="day-tab" data-day="tuesday">Tuesday</button>
+        <button class="day-tab" data-day="wednesday">Wednesday</button>
+        <button class="day-tab" data-day="thursday">Thursday</button>
+        <button class="day-tab" data-day="friday">Friday</button>
+    </div>
+
+    <!-- Subjects Grid -->
+    <section class="subjects-grid">
+        {{ range .Pages }}
+        {{ if eq .Type "subject" }}
+        <article class="subject-card" data-days="{{ delimit .Params.days "," | lower }}" style="--card-color: {{ .Params.color | default "gray" }}">
+            <div class="subject-card-header">
+                <h2 class="subject-title">{{ .Title }}</h2>
+                <span class="subject-credits">{{ .Params.credits }} credits</span>
+            </div>
+
+            <div class="subject-info">
+                <div class="info-row">
+                    <span class="info-icon">👨‍🏫</span>
+                    <div class="info-content">
+                        <span class="info-label">Teacher</span>
+                        <span class="info-value">{{ .Params.teacher }}</span>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-icon">📅</span>
+                    <div class="info-content">
+                        <span class="info-label">Schedule</span>
+                        <span class="info-value">{{ delimit .Params.days ", " }}</span>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-icon">⏰</span>
+                    <div class="info-content">
+                        <span class="info-label">Time</span>
+                        <span class="info-value">{{ .Params.time }}</span>
+                    </div>
+                </div>
+
+                <div class="info-row">
+                    <span class="info-icon">📍</span>
+                    <div class="info-content">
+                        <span class="info-label">Location</span>
+                        <span class="info-value">{{ .Params.location }}</span>
+                    </div>
+                </div>
+            </div>
+
+            {{ if .Content }}
+            <div class="subject-description">
+                {{ .Content }}
+            </div>
+            {{ end }}
+        </article>
+        {{ end }}
+        {{ end }}
+    </section>
+</div>
+
+<script>
+// Day filtering functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const dayTabs = document.querySelectorAll('.day-tab');
+    const subjectCards = document.querySelectorAll('.subject-card');
+
+    dayTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Update active state
+            dayTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+
+            const selectedDay = this.dataset.day;
+
+            // Filter cards
+            subjectCards.forEach(card => {
+                const cardDays = card.dataset.days.toLowerCase();
+
+                if (selectedDay === 'all' || cardDays.includes(selectedDay)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+</script>
+{{ end }}

@@ -16,3 +16,8 @@
 <link rel="token_endpoint" href="https://tokens.indieauth.com/token">
 {{ with .Site.Params.githubuser }}
 <link rel="me" href="https://github.com/{{ . }}" />{{ end }}
+
+<!-- Subjects page styles -->
+{{ if or (eq .Section "subjects") (eq .Type "subjects") }}
+<link rel="stylesheet" href="/css/subjects.css">
+{{ end }}

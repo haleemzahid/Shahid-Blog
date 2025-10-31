@@ -1,0 +1,130 @@
+{{ define "main" }}
+{{ if eq .File.BaseFileName "today" }}
+<!-- Today's Classes View -->
+<div class="today-classes-page">
+    <header class="page-header">
+        <h1>{{ .Title }}</h1>
+        <p class="today-date" id="today-date"></p>
+        <a href="/subjects/" class="back-link">← View All Subjects</a>
+    </header>
+
+    <section class="today-classes" id="today-classes">
+        <!-- Will be populated by JavaScript -->
+    </section>
+
+    <div class="no-classes" id="no-classes" style="display: none;">
+        <div class="no-classes-content">
+            <span class="emoji">🎉</span>
+            <h2>No Classes Today!</h2>
+            <p>Enjoy your free day.</p>
+            <a href="/subjects/" class="view-all-btn">View All Subjects</a>
+        </div>
+    </div>
+</div>
+
+<script>
+// Get all subjects data
+const allSubjects = [
+    {{ range where .Site.Pages "Type" "subject" }}
+    {
+        "title": {{ .Title | jsonify }},
+        "teacher": {{ .Params.teacher | jsonify }},
+        "days": {{ .Params.days | jsonify }},
+        "time": {{ .Params.time | jsonify }},
+        "location": {{ .Params.location | jsonify }},
+        "color": {{ .Params.color | default "gray" | jsonify }},
+        "content": {{ .Content | jsonify }}
+    },
+    {{ end }}
+];
+
+document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date();
+    const days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const todayName = days[today.getDay()];
+
+    // Display today's date
+    const dateElement = document.getElementById('today-date');
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    dateElement.textContent = today.toLocaleDateString('en-US', options);
+
+    // Filter classes for today
+    const todayClasses = allSubjects.filter(subject =>
+        subject.days && subject.days.some(day => day.toLowerCase() === todayName)
+    );
+
+    const classesContainer = document.getElementById('today-classes');
+    const noClassesDiv = document.getElementById('no-classes');
+
+    if (todayClasses.length === 0) {
+        noClassesDiv.style.display = 'block';
+        return;
+    }
+
+    // Sort by time
+    todayClasses.sort((a, b) => {
+        const timeA = a.time.split('-')[0];
+        const timeB = b.time.split('-')[0];
+        return timeA.localeCompare(timeB);
+    });
+
+    // Render today's classes
+    todayClasses.forEach((subject, index) => {
+        const card = document.createElement('article');
+        card.className = 'today-class-card';
+        card.style.setProperty('--card-color', subject.color);
+
+        // Check if class is happening now or upcoming
+        const now = new Date();
+        const currentTime = now.getHours() * 60 + now.getMinutes();
+        const [startTime] = subject.time.split('-');
+        const [hours, minutes] = startTime.split(':').map(Number);
+        const classTime = hours * 60 + minutes;
+
+        let statusBadge = '';
+        if (Math.abs(currentTime - classTime) < 30 && currentTime <= classTime) {
+            statusBadge = '<span class="status-badge upcoming">Starting Soon</span>';
+        } else if (currentTime >= classTime && currentTime < classTime + 90) {
+            statusBadge = '<span class="status-badge happening">Happening Now</span>';
+        }
+
+        card.innerHTML = `
+            <div class="class-time-indicator">
+                <div class="time-badge">${subject.time}</div>
+                ${statusBadge}
+            </div>
+            <div class="class-details">
+                <h2 class="class-title">${subject.title}</h2>
+                <div class="class-info-grid">
+                    <div class="info-item">
+                        <span class="info-icon">👨‍🏫</span>
+                        <span class="info-text">${subject.teacher}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-icon">📍</span>
+                        <span class="info-text">${subject.location}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        classesContainer.appendChild(card);
+    });
+});
+</script>
+{{ else }}
+<!-- Regular subject single page -->
+<div class="subject-single-page">
+    <article class="subject-detail">
+        <header class="subject-header">
+            <h1>{{ .Title }}</h1>
+            <a href="/subjects/" class="back-link">← Back to Subjects</a>
+        </header>
+
+        <div class="subject-content">
+            {{ .Content }}
+        </div>
+    </article>
+</div>
+{{ end }}
+{{ end }}
