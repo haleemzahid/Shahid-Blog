@@ -1,9 +1,9 @@
 ---
-title: "Victoria Drake"
+title: "Shahid Khan"
 outputs: HTML
 layout: page
 aliases:
-    - /about/cv
+  - /about/cv
 ---
 
 ## Engineering Director and Principal Software Engineer
@@ -16,7 +16,7 @@ I'm a co-author of the OWASP Web Security Testing Guide and advocate for cyberse
 
 You can read more [about me](/about) or [send me an email](/contact).
 
-[Download a PDF version](/Victoria-Drake-Resume.pdf) of my resume.
+[Download a PDF version](/Shahid-Khan-Resume.pdf) of my resume.
 
 ## Principal Software Engineer
 
@@ -96,4 +96,4 @@ Related:
 
 ## Contact
 
-[hello@victoria.dev](mailto:hello@victoria.dev)
+[hello@shahidkhan.dev](mailto:hello@shahidkhan.dev)

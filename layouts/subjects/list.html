@@ -1,108 +1,139 @@
 {{ define "main" }}
-<link rel="stylesheet" href="/css/timeline.css">
-
-<div class="subject-container">
-    <!-- Subject Header -->
-    <header class="subject-header">
-        <div class="subject-info">
-            <h1 class="subject-title">{{ .Title }}</h1>
-            <p class="subject-professor">👨‍🏫 {{ .Params.professor }}</p>
-            <p class="subject-code">{{ .Params.subject_code }}</p>
-            <p class="subject-description">{{ .Params.description }}</p>
-        </div>
-    </header>
-
-    <!-- Date Filters -->
-    <div class="filters-container">
-        <div class="filter-buttons">
-            <button class="filter-btn active" data-filter="all">All Classes</button>
-            <button class="filter-btn" data-filter="week">This Week</button>
-            <button class="filter-btn" data-filter="10days">Last 10 Days</button>
-            <button class="filter-btn" data-filter="30days">Last 30 Days</button>
-            <button class="filter-btn" data-filter="custom">Custom Range</button>
-        </div>
-
-        <div class="custom-date-range" id="customDateRange" style="display: none;">
-            <input type="date" id="startDate" class="date-input" placeholder="Start Date">
-            <span>to</span>
-            <input type="date" id="endDate" class="date-input" placeholder="End Date">
-            <button id="applyDateFilter" class="apply-btn">Apply</button>
-        </div>
-
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="🔍 Search topics, titles..." class="search-input">
-        </div>
+<div class="posts-page">
+  <!-- Page Header -->
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+    <p style="margin: 0.5rem 0; color: #666;">{{ .Params.professor }} • {{ .Params.subject_code }}</p>
+    <div class="posts-meta" style="margin-top: 2rem;">
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All Classes</button>
+        <button class="filter-tab" data-filter="week">This Week</button>
+        <button class="filter-tab" data-filter="30days">Last 30 Days</button>
+      </div>
     </div>
-
-    <!-- Statistics -->
-    <div class="stats-container">
-        <div class="stat-card">
-            <span class="stat-number" id="totalClasses">{{ len .Pages }}</span>
-            <span class="stat-label">Total Classes</span>
+  </header>
+  
+  <!-- Search -->
+  <div style="margin: 2rem 0;">
+    <input type="text" id="searchInput" placeholder="Search topics, titles..." 
+           style="width: 100%; max-width: 600px; padding: 0.75rem; border: 1px solid #e5e5e5; border-radius: 4px; font-size: 1rem;">
+  </div>
+  
+  <!-- Classes Grid -->
+  <section class="posts-grid" id="classes-grid">
+    {{ $classesSection := .GetPage "classes" }}
+    {{ if $classesSection }}
+      {{ range $index, $class := $classesSection.Pages.ByDate.Reverse }}
+      <article class="grid-post" 
+               data-date="{{ .Date.Format "2006-01-02" }}"
+               data-topics="{{ delimit .Params.topics "|" | lower }}"
+               data-title="{{ .Title | lower }}">
+        <div class="grid-post-header">
+          <span class="post-number">{{ printf "%02d" (add $index 1) }}</span>
+          <span class="post-category">{{ .Date.Format "Jan 2" }}</span>
         </div>
-        <div class="stat-card">
-            <span class="stat-number" id="filteredClasses">{{ len .Pages }}</span>
-            <span class="stat-label">Showing</span>
+        <h2 class="grid-post-title">
+          <a href="{{ .Permalink }}">{{ .Title }}</a>
+        </h2>
+        {{ if .Params.topics }}
+        <div class="grid-post-meta">
+          {{ range first 3 .Params.topics }}
+          <span style="color: #666; font-size: 0.875rem;">{{ . }}</span>
+          {{ end }}
         </div>
-        <div class="stat-card">
-            <span class="stat-number" id="totalTopics">
-                {{ $topicCount := 0 }}
-                {{ range .Pages }}
-                    {{ $topicCount = add $topicCount (len .Params.topics) }}
-                {{ end }}
-                {{ $topicCount }}
-            </span>
-            <span class="stat-label">Topics Covered</span>
+        {{ end }}
+        <div class="grid-post-meta" style="margin-top: 0.5rem;">
+          {{ if .Params.videos }}<span>📹 {{ len .Params.videos }}</span>{{ end }}
+          {{ if .Params.audio }}<span>🎵 {{ len .Params.audio }}</span>{{ end }}
+          {{ if .Params.images }}<span>🖼️ {{ len .Params.images }}</span>{{ end }}
+          {{ if .Params.documents }}<span>📄 {{ len .Params.documents }}</span>{{ end }}
         </div>
-    </div>
-
-    <!-- Timeline -->
-    <div class="timeline-container">
-        <div id="timelineContent">
-            <!-- Classes will be loaded here by JavaScript -->
-        </div>
-
-        <div class="load-more-container" id="loadMoreContainer" style="display: none;">
-            <button id="loadMoreBtn" class="load-more-btn">
-                ⬇️ Load More Classes
-                <span id="loadMoreCount"></span>
-            </button>
-        </div>
-
-        <div class="no-results" id="noResults" style="display: none;">
-            <p>No classes found matching your criteria.</p>
-        </div>
-    </div>
+      </article>
+      {{ end }}
+    {{ end }}
+  </section>
+  
+  <!-- No Results -->
+  <div id="noResults" style="display: none; text-align: center; padding: 4rem 0; color: #666;">
+    <p>No classes found matching your criteria.</p>
+  </div>
+  
+  <!-- Stats Footer -->
+  {{ $classesSection := .GetPage "classes" }}
+  {{ if $classesSection }}
+  <div style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #e5e5e5; color: #666;">
+    <span id="filteredCount">{{ len $classesSection.Pages }}</span> of {{ len $classesSection.Pages }} classes
+  </div>
+  {{ end }}
 </div>
 
-<!-- Hidden data for JavaScript -->
-<script id="classesData" type="application/json">
-[
-{{ $first := true }}
-{{ range .Pages.ByDate.Reverse }}
-    {{ if not $first }},{{ end }}
-    {{ $first = false }}
-    {
-        "title": {{ .Title | jsonify }},
-        "date": {{ .Date.Format "2006-01-02" | jsonify }},
-        "dateFormatted": {{ .Date.Format "Monday, January 2, 2006" | jsonify }},
-        "time": {{ .Params.classTime | jsonify }},
-        "location": {{ .Params.location | jsonify }},
-        "topics": {{ .Params.topics | jsonify }},
-        "professor": {{ .Params.professor | jsonify }},
-        "url": {{ .Permalink | jsonify }},
-        "hasVideos": {{ if .Params.videos }}true{{ else }}false{{ end }},
-        "videoCount": {{ if .Params.videos }}{{ len .Params.videos }}{{ else }}0{{ end }},
-        "hasAudio": {{ if .Params.audio }}true{{ else }}false{{ end }},
-        "audioCount": {{ if .Params.audio }}{{ len .Params.audio }}{{ else }}0{{ end }},
-        "hasImages": {{ if .Params.images }}true{{ else }}false{{ end }},
-        "imageCount": {{ if .Params.images }}{{ len .Params.images }}{{ else }}0{{ end }},
-        "hasDocuments": {{ if .Params.documents }}true{{ else }}false{{ end }},
-        "documentCount": {{ if .Params.documents }}{{ len .Params.documents }}{{ else }}0{{ end }}
-    }
-{{ end }}
-]
-</script>
+<script>
+// Simple filtering for classes
+document.addEventListener('DOMContentLoaded', function() {
+  const allCards = Array.from(document.querySelectorAll('.grid-post'));
+  const searchInput = document.getElementById('searchInput');
+  const filterTabs = document.querySelectorAll('.filter-tab[data-filter]');
+  const noResults = document.getElementById('noResults');
+  const filteredCount = document.getElementById('filteredCount');
+  const grid = document.getElementById('classes-grid');
+  let currentFilter = 'all';
 
-<script src="/js/timeline.js"></script>
+  function applyFilter() {
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    let visibleCount = 0;
+
+    allCards.forEach(card => {
+      const cardDate = new Date(card.dataset.date);
+      const cardTitle = card.dataset.title || '';
+      const cardTopics = card.dataset.topics || '';
+
+      // Date filter
+      let dateMatch = true;
+      if (currentFilter === 'week') {
+        const weekAgo = new Date(today);
+        weekAgo.setDate(weekAgo.getDate() - 7);
+        dateMatch = cardDate >= weekAgo && cardDate <= today;
+      } else if (currentFilter === '30days') {
+        const thirtyDaysAgo = new Date(today);
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        dateMatch = cardDate >= thirtyDaysAgo && cardDate <= today;
+      }
+
+      // Search filter
+      const searchMatch = !searchTerm || cardTitle.includes(searchTerm) || cardTopics.includes(searchTerm);
+
+      // Show/hide
+      if (dateMatch && searchMatch) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Update UI
+    if (filteredCount) filteredCount.textContent = visibleCount;
+    if (noResults) noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    if (grid) grid.style.display = visibleCount === 0 ? 'none' : 'grid';
+  }
+
+  // Filter tabs
+  filterTabs.forEach(tab => {
+    tab.addEventListener('click', function() {
+      filterTabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      currentFilter = this.dataset.filter;
+      applyFilter();
+    });
+  });
+
+  // Search
+  if (searchInput) searchInput.addEventListener('input', applyFilter);
+
+  // Initial render
+  applyFilter();
+});
+</script>
 {{ end }}

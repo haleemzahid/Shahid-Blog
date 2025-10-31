@@ -5,6 +5,7 @@
   "author": "Victoria Drake",
   "type": "module",
   "scripts": {
+    "dev":" hugo server --buildDrafts --buildFuture ",
     "build": "hugo",
     "subs": "git submodule update --init --recursive",
     "generate-critical": "node utils/generate-critical-css.mjs",
