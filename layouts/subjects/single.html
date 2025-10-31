@@ -1,0 +1,179 @@
+{{ define "main" }}
+<link rel="stylesheet" href="/css/timeline.css">
+
+<article class="class-detail">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <a href="/subjects">Subjects</a> /
+        <a href="{{ .Parent.Permalink }}">{{ .Parent.Title }}</a> /
+        <span>{{ .Title }}</span>
+    </nav>
+
+    <!-- Class Header -->
+    <header class="class-header">
+        <div class="class-meta">
+            <span class="class-date">📅 {{ .Date.Format "Monday, January 2, 2006" }}</span>
+            <span class="class-time">🕐 {{ .Params.classTime }}</span>
+            <span class="class-location">📍 {{ .Params.location }}</span>
+            <span class="class-professor">👨‍🏫 {{ .Params.professor }}</span>
+        </div>
+        <h1 class="class-title">{{ .Title }}</h1>
+
+        {{ if .Params.topics }}
+        <div class="topics-list">
+            {{ range .Params.topics }}
+            <span class="topic-tag">{{ . }}</span>
+            {{ end }}
+        </div>
+        {{ end }}
+    </header>
+
+    <!-- Media Section -->
+    <div class="media-section">
+        <!-- Videos -->
+        {{ if .Params.videos }}
+        <section class="media-group">
+            <h2 class="media-heading">📹 Video Recordings</h2>
+            <div class="videos-grid">
+                {{ range $index, $video := .Params.videos }}
+                <div class="video-card">
+                    <h3 class="video-title">{{ $video.title }}</h3>
+                    {{ if $video.duration }}
+                    <span class="video-duration">⏱️ {{ $video.duration }}</span>
+                    {{ end }}
+                    <div class="video-wrapper">
+                        <iframe
+                            src="{{ $video.url }}"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                            class="video-player">
+                        </iframe>
+                    </div>
+                    <a href="{{ $video.url }}" target="_blank" class="download-btn" download>
+                        ⬇️ Open in New Tab
+                    </a>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+        {{ end }}
+
+        <!-- Audio -->
+        {{ if .Params.audio }}
+        <section class="media-group">
+            <h2 class="media-heading">🎵 Audio Recordings</h2>
+            <div class="audio-grid">
+                {{ range $index, $audio := .Params.audio }}
+                <div class="audio-card">
+                    <h3 class="audio-title">{{ $audio.title }}</h3>
+                    <audio controls class="audio-player" controlsList="nodownload">
+                        <source src="{{ $audio.url }}" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <a href="{{ $audio.url }}" class="download-btn" download>
+                        ⬇️ Download Audio
+                    </a>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+        {{ end }}
+
+        <!-- Images -->
+        {{ if .Params.images }}
+        <section class="media-group">
+            <h2 class="media-heading">📷 Class Notes & Images</h2>
+            <div class="images-grid">
+                {{ range $index, $image := .Params.images }}
+                <div class="image-card">
+                    <img src="{{ $image.url }}" alt="{{ $image.caption }}" class="class-image" loading="lazy">
+                    {{ if $image.caption }}
+                    <p class="image-caption">{{ $image.caption }}</p>
+                    {{ end }}
+                    <a href="{{ $image.url }}" class="download-btn" download>
+                        ⬇️ Download Image
+                    </a>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+        {{ end }}
+
+        <!-- Documents -->
+        {{ if .Params.documents }}
+        <section class="media-group">
+            <h2 class="media-heading">📄 Documents & PDFs</h2>
+            <div class="documents-list">
+                {{ range $index, $doc := .Params.documents }}
+                <div class="document-card">
+                    <span class="document-icon">
+                        {{ if eq $doc.type "pdf" }}📕{{ else }}📄{{ end }}
+                    </span>
+                    <span class="document-title">{{ $doc.title }}</span>
+                    <a href="{{ $doc.url }}" class="download-btn" download>
+                        ⬇️ Download
+                    </a>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+        {{ end }}
+    </div>
+
+    <!-- Class Content -->
+    <div class="class-content">
+        {{ .Content }}
+    </div>
+
+    <!-- Navigation -->
+    <nav class="class-navigation">
+        {{ with .PrevInSection }}
+        <a href="{{ .Permalink }}" class="nav-btn nav-prev">
+            ← Previous Class<br>
+            <span class="nav-title">{{ .Title }}</span>
+        </a>
+        {{ end }}
+
+        <a href="{{ .Parent.Permalink }}" class="nav-btn nav-back">
+            ↑ Back to Timeline
+        </a>
+
+        {{ with .NextInSection }}
+        <a href="{{ .Permalink }}" class="nav-btn nav-next">
+            Next Class →<br>
+            <span class="nav-title">{{ .Title }}</span>
+        </a>
+        {{ end }}
+    </nav>
+</article>
+
+<script>
+// Image lightbox functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('.class-image');
+
+    images.forEach(img => {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', function() {
+            const lightbox = document.createElement('div');
+            lightbox.className = 'lightbox';
+            lightbox.innerHTML = `
+                <div class="lightbox-content">
+                    <span class="lightbox-close">&times;</span>
+                    <img src="${this.src}" alt="${this.alt}">
+                    <p class="lightbox-caption">${this.nextElementSibling?.textContent || ''}</p>
+                </div>
+            `;
+            document.body.appendChild(lightbox);
+
+            lightbox.addEventListener('click', function(e) {
+                if (e.target === lightbox || e.target.className === 'lightbox-close') {
+                    lightbox.remove();
+                }
+            });
+        });
+    });
+});
+</script>
+{{ end }}

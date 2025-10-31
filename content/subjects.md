@@ -9,24 +9,31 @@ description: "University subjects and weekly class schedule for BS in Artificial
 
 <div class="subjects-page">
 
+> **Click on any subject below to view the complete class timeline with videos, audio recordings, images, and notes for each lecture!**
+
 ## Subjects and Instructors
 
 <div class="subjects-grid">
 
-### Applied Physics
+### <a href="/subjects/applied-physics/" style="color: var(--accent-technical, #ff0055); text-decoration: none;">Applied Physics</a>
 **Instructor:** Dr. Fareesa Tasneem
+[📚 View Class Timeline & Notes →](/subjects/applied-physics/)
 
-### Functional English
+### <a href="/subjects/functional-english/" style="color: var(--accent-technical, #ff0055); text-decoration: none;">Functional English</a>
 **Instructor:** Ms. Faryal
+[📚 View Class Timeline & Notes →](/subjects/functional-english/)
 
-### Pakistan Studies
+### <a href="/subjects/pakistan-studies/" style="color: var(--accent-technical, #ff0055); text-decoration: none;">Pakistan Studies</a>
 **Instructor:** Ambareen
+[📚 View Class Timeline & Notes →](/subjects/pakistan-studies/)
 
-### Calculus and Analytical Geometry
+### <a href="/subjects/calculus/" style="color: var(--accent-technical, #ff0055); text-decoration: none;">Calculus and Analytical Geometry</a>
 **Instructor:** Dr. Mehboob Ul Huq
+[📚 View Class Timeline & Notes →](/subjects/calculus/)
 
-### Ideology and Constitution of Pakistan
+### <a href="/subjects/ideology-constitution/" style="color: var(--accent-technical, #ff0055); text-decoration: none;">Ideology and Constitution of Pakistan</a>
 **Instructor:** Rubi Laila
+[📚 View Class Timeline & Notes →](/subjects/ideology-constitution/)
 
 </div>
 

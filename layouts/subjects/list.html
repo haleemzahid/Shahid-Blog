@@ -1,0 +1,108 @@
+{{ define "main" }}
+<link rel="stylesheet" href="/css/timeline.css">
+
+<div class="subject-container">
+    <!-- Subject Header -->
+    <header class="subject-header">
+        <div class="subject-info">
+            <h1 class="subject-title">{{ .Title }}</h1>
+            <p class="subject-professor">👨‍🏫 {{ .Params.professor }}</p>
+            <p class="subject-code">{{ .Params.subject_code }}</p>
+            <p class="subject-description">{{ .Params.description }}</p>
+        </div>
+    </header>
+
+    <!-- Date Filters -->
+    <div class="filters-container">
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Classes</button>
+            <button class="filter-btn" data-filter="week">This Week</button>
+            <button class="filter-btn" data-filter="10days">Last 10 Days</button>
+            <button class="filter-btn" data-filter="30days">Last 30 Days</button>
+            <button class="filter-btn" data-filter="custom">Custom Range</button>
+        </div>
+
+        <div class="custom-date-range" id="customDateRange" style="display: none;">
+            <input type="date" id="startDate" class="date-input" placeholder="Start Date">
+            <span>to</span>
+            <input type="date" id="endDate" class="date-input" placeholder="End Date">
+            <button id="applyDateFilter" class="apply-btn">Apply</button>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Search topics, titles..." class="search-input">
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <span class="stat-number" id="totalClasses">{{ len .Pages }}</span>
+            <span class="stat-label">Total Classes</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number" id="filteredClasses">{{ len .Pages }}</span>
+            <span class="stat-label">Showing</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number" id="totalTopics">
+                {{ $topicCount := 0 }}
+                {{ range .Pages }}
+                    {{ $topicCount = add $topicCount (len .Params.topics) }}
+                {{ end }}
+                {{ $topicCount }}
+            </span>
+            <span class="stat-label">Topics Covered</span>
+        </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline-container">
+        <div id="timelineContent">
+            <!-- Classes will be loaded here by JavaScript -->
+        </div>
+
+        <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+            <button id="loadMoreBtn" class="load-more-btn">
+                ⬇️ Load More Classes
+                <span id="loadMoreCount"></span>
+            </button>
+        </div>
+
+        <div class="no-results" id="noResults" style="display: none;">
+            <p>No classes found matching your criteria.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden data for JavaScript -->
+<script id="classesData" type="application/json">
+[
+{{ $first := true }}
+{{ range .Pages.ByDate.Reverse }}
+    {{ if not $first }},{{ end }}
+    {{ $first = false }}
+    {
+        "title": {{ .Title | jsonify }},
+        "date": {{ .Date.Format "2006-01-02" | jsonify }},
+        "dateFormatted": {{ .Date.Format "Monday, January 2, 2006" | jsonify }},
+        "time": {{ .Params.classTime | jsonify }},
+        "location": {{ .Params.location | jsonify }},
+        "topics": {{ .Params.topics | jsonify }},
+        "professor": {{ .Params.professor | jsonify }},
+        "url": {{ .Permalink | jsonify }},
+        "hasVideos": {{ if .Params.videos }}true{{ else }}false{{ end }},
+        "videoCount": {{ if .Params.videos }}{{ len .Params.videos }}{{ else }}0{{ end }},
+        "hasAudio": {{ if .Params.audio }}true{{ else }}false{{ end }},
+        "audioCount": {{ if .Params.audio }}{{ len .Params.audio }}{{ else }}0{{ end }},
+        "hasImages": {{ if .Params.images }}true{{ else }}false{{ end }},
+        "imageCount": {{ if .Params.images }}{{ len .Params.images }}{{ else }}0{{ end }},
+        "hasDocuments": {{ if .Params.documents }}true{{ else }}false{{ end }},
+        "documentCount": {{ if .Params.documents }}{{ len .Params.documents }}{{ else }}0{{ end }}
+    }
+{{ end }}
+]
+</script>
+
+<script src="/js/timeline.js"></script>
+{{ end }}
