@@ -1,0 +1,207 @@
+/* Subjects Page Styles */
+
+.subjects-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+/* Subjects Grid */
+.subjects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.subjects-grid h3 {
+    color: var(--accent-technical, #ff0055);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    border-left: 4px solid var(--accent-technical, #ff0055);
+    padding-left: 1rem;
+}
+
+.subjects-grid p {
+    margin-left: 1rem;
+    color: var(--gray-700, #333);
+}
+
+@media (prefers-color-scheme: dark) {
+    .subjects-grid p {
+        color: var(--gray-300, #ccc);
+    }
+}
+
+/* Timetable Container */
+.timetable-container {
+    margin-top: 2rem;
+}
+
+.timetable-container > h3 {
+    color: var(--accent-leadership, #00D4FF);
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-leadership, #00D4FF);
+}
+
+/* Day Schedule */
+.day-schedule {
+    margin-bottom: 2rem;
+}
+
+.day-schedule table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--white, #fff);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+    .day-schedule table {
+        background: var(--gray-900, #1a1a1a);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.day-schedule table th,
+.day-schedule table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--gray-200, #eee);
+}
+
+@media (prefers-color-scheme: dark) {
+    .day-schedule table th,
+    .day-schedule table td {
+        border-bottom: 1px solid var(--gray-700, #333);
+    }
+}
+
+.day-schedule table th {
+    background: var(--gray-100, #f5f5f5);
+    font-weight: 600;
+    color: var(--black, #000);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+@media (prefers-color-scheme: dark) {
+    .day-schedule table th {
+        background: var(--gray-800, #2a2a2a);
+        color: var(--white, #fff);
+    }
+}
+
+.day-schedule table tr:last-child td {
+    border-bottom: none;
+}
+
+.day-schedule table tr:hover {
+    background: var(--gray-50, #fafafa);
+}
+
+@media (prefers-color-scheme: dark) {
+    .day-schedule table tr:hover {
+        background: var(--gray-800, #252525);
+    }
+}
+
+/* Time column */
+.day-schedule table td:first-child {
+    font-weight: 600;
+    color: var(--accent-technical, #ff0055);
+    white-space: nowrap;
+}
+
+/* Subject column */
+.day-schedule table td:nth-child(2) {
+    font-weight: 500;
+}
+
+/* Location column */
+.day-schedule table td:last-child {
+    color: var(--gray-600, #666);
+    font-style: italic;
+}
+
+@media (prefers-color-scheme: dark) {
+    .day-schedule table td:last-child {
+        color: var(--gray-400, #999);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .subjects-page {
+        padding: 1rem 0.5rem;
+    }
+
+    .subjects-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .day-schedule table {
+        font-size: 0.9rem;
+    }
+
+    .day-schedule table th,
+    .day-schedule table td {
+        padding: 0.75rem 0.5rem;
+    }
+
+    /* Stack table on very small screens */
+    @media (max-width: 480px) {
+        .day-schedule table,
+        .day-schedule table tbody,
+        .day-schedule table tr,
+        .day-schedule table td {
+            display: block;
+            width: 100%;
+        }
+
+        .day-schedule table thead {
+            display: none;
+        }
+
+        .day-schedule table td {
+            position: relative;
+            padding-left: 40%;
+            text-align: right;
+        }
+
+        .day-schedule table td:before {
+            content: attr(data-label);
+            position: absolute;
+            left: 0.5rem;
+            width: 35%;
+            padding-right: 0.5rem;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+    }
+}
+
+/* Print Styles */
+@media print {
+    .subjects-page {
+        max-width: 100%;
+    }
+
+    .day-schedule table {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+
+    .day-schedule table tr:hover {
+        background: none;
+    }
+}
