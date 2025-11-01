@@ -5,15 +5,14 @@ datePublished: Tue Aug 27 2024 13:55:32 GMT+0000 (Coordinated Universal Time)
 cuid: cm0chp6ka001309jwdjaxffnl
 slug: how-to-create-technical-documentation-using-chatgpt
 description: "AI-powered documentation that developers actually use. Transform docs from chore to superpower with prompts for onboarding and incident response guides."
-canonical: https://victoria.dev/posts/how-to-create-technical-documentation-using-chatgpt
+canonical: https://shahidkhan.dev/posts/how-to-create-technical-documentation-using-chatgpt
 image: https://cdn.hashnode.com/res/hashnode/image/upload/v1724610603073/dbed6199-8e9c-4858-b299-a8d84e280156.jpeg
 aliases:
-    - /posts/how-to-create-technical-documentation-using-chatgpt/
-    - /how-to-create-technical-documentation-using-chatgpt/
+  - /posts/how-to-create-technical-documentation-using-chatgpt/
+  - /how-to-create-technical-documentation-using-chatgpt/
 tags:
-    - ai
-    - development
-
+  - ai
+  - development
 ---
 
 Documentation has always been one of those “we should do this” tasks that somehow never makes it to the top of the sprint. But what if creating comprehensive, useful documentation could be as straightforward as explaining your code to a colleague?

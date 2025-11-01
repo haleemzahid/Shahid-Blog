@@ -3,15 +3,15 @@ title: "From 17 Minutes to 8 Seconds: Strategic Performance Optimization for Eng
 date: 2020-02-25T12:50:29-05:00
 
 aliases:
-    - /posts/breaking-bottlenecks-engineering-for-performance-and-productivity/
+  - /posts/breaking-bottlenecks-engineering-for-performance-and-productivity/
 description: "How engineering leaders can drive organizational impact by identifying and breaking critical performance bottlenecks in CI/CD pipelines and development workflows."
 tags:
-    - compsci
-    - development
-    - security
-    - go
-    - python
-    - leadership
+  - compsci
+  - development
+  - security
+  - go
+  - python
+  - leadership
 image: cover.png
 featured: true
 draft: false
@@ -56,8 +56,8 @@ As engineering leaders, we need to think about performance in terms of organizat
 | RAM     | Mutex lock/unlock                   | 25 nanosec                      |
 | RAM     | fetch from main memory              | 100 nanosec                     |
 | RAM     | read 1MB sequentially from memory   | 250,000 nanosec                 |
-| Disk    | fetch from new disk location (seek) | 8,000,000 nanosec   (8ms)       |
-| Disk    | read 1MB sequentially from disk     | 20,000,000 nanosec  (20ms)      |
+| Disk    | fetch from new disk location (seek) | 8,000,000 nanosec (8ms)         |
+| Disk    | read 1MB sequentially from disk     | 20,000,000 nanosec (20ms)       |
 | Network | send packet US to Europe and back   | 150,000,000 nanosec (150ms)     |
 
 Peter Norvig first published these numbers some years ago in [Teach Yourself Programming in Ten Years](http://norvig.com/21-days.html#answers). While technology changes over the decades, the order-of-magnitude differences between these numbers remain as devastatingly accurate as ever.
@@ -68,7 +68,7 @@ A single-thread crawler workflow creates an inherent bottleneck:
 
 1. Fetch HTML from a page (network-bound operation)
 2. Parse links from the HTML content
-3. Validate each link by making HTTP requests (more network-bound operations)  
+3. Validate each link by making HTTP requests (more network-bound operations)
 4. Track visited links to avoid duplicate work
 5. Repeat for every page found
 
@@ -111,10 +111,10 @@ This is where engineering leadership gets interesting: balancing competing const
 
 The decision matrix looked like this:
 
-- ****Team familiarity****: Python had broad adoption across OWASP contributors
-- ****Performance requirements****: Go's goroutines made concurrent programming more straightforward
-- ****Maintainability****: We needed something contributors could debug and extend
-- ****Long-term scalability****: The solution needed to handle growing content without constant optimization
+- \***\*Team familiarity\*\***: Python had broad adoption across OWASP contributors
+- \***\*Performance requirements\*\***: Go's goroutines made concurrent programming more straightforward
+- \***\*Maintainability\*\***: We needed something contributors could debug and extend
+- \***\*Long-term scalability\*\***: The solution needed to handle growing content without constant optimization
 
 I chose to prototype the link checker in both languages. I built a multithreaded Python version that I dubbed [Hydra](https://github.com/victoriadrake/hydra-link-checker), and a Go version that took advantage of goroutines. This gave us concrete data to inform the decision rather than relying on assumptions. This approach—building multiple solutions to validate architectural choices—is something I've found invaluable for critical infrastructure decisions.
 
@@ -169,7 +169,7 @@ To obtain some concrete data, I compared the numbers between three implementatio
 ### Single-Threaded Python Prototype
 
 ```text
-time python3 slow-link-check.py https://victoria.dev
+time python3 slow-link-check.py https://shahidkhan.dev
 
 real 17m34.084s
 user 11m40.761s
@@ -181,7 +181,7 @@ Seventeen minutes for a site much smaller than OWASP.org meant our original appr
 ### Hydra: Multithreaded Python Version
 
 ```text
-time python3 hydra.py https://victoria.dev
+time python3 hydra.py https://shahidkhan.dev
 
 real 1m13.358s
 user 0m13.161s
@@ -193,7 +193,7 @@ The concurrency improvements brought us down to just over a minute—a 15x impro
 ### Go Implementation
 
 ```text
-time ./go-link-check --url=https://victoria.dev
+time ./go-link-check --url=https://shahidkhan.dev
 
 real 0m7.926s
 user 0m9.044s

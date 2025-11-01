@@ -6,7 +6,7 @@ on:
     types: [completed]
 
 env:
-  URL: https://victoria.dev
+  URL: https://shahidkhan.dev
   CONFIG: utils/hydra-config.json
 
 jobs:

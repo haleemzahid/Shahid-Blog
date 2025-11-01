@@ -3,14 +3,14 @@ title: "17 Minutes to 16 Seconds: a 60x Performance Improvement from… Python?!
 date: 2020-02-28T09:31:02-05:00
 
 aliases:
-    - /posts/multithreaded-python-slithering-through-an-i/o-bottleneck/
+  - /posts/multithreaded-python-slithering-through-an-i/o-bottleneck/
 description: "60x Python performance gains through smart multithreading. Engineering leaders' guide to identifying real bottlenecks and optimizing what actually matters."
 tags:
-    - python
-    - compsci
-    - development
-    - data
-    - open-source
+  - python
+  - compsci
+  - development
+  - data
+  - open-source
 image: cover.png
 featured: true
 draft: false
@@ -29,19 +29,19 @@ As an engineering leader, one of your most important responsibilities is helping
 
 Here are approximate timings for tasks performed on a typical PC:
 
-|       |Task                               |Time                           |
-|-------|-----------------------------------|-------------------------------|
-|CPU    |execute typical instruction        |1/1,000,000,000 sec = 1 nanosec|
-|CPU    |fetch from L1 cache memory         |0.5 nanosec                    |
-|CPU    |branch misprediction               |5 nanosec                      |
-|CPU    |fetch from L2 cache memory         |7 nanosec                      |
-|RAM    |Mutex lock/unlock                  |25 nanosec                     |
-|RAM    |fetch from main memory             |100 nanosec                    |
-|Network|send 2K bytes over 1Gbps network   |20,000 nanosec                 |
-|RAM    |read 1MB sequentially from memory  |250,000 nanosec                |
-|Disk   |fetch from new disk location (seek)|8,000,000 nanosec   (8ms)      |
-|Disk   |read 1MB sequentially from disk    |20,000,000 nanosec  (20ms)     |
-|Network|send packet US to Europe and back  |150,000,000 nanosec (150ms)    |
+|         | Task                                | Time                            |
+| ------- | ----------------------------------- | ------------------------------- |
+| CPU     | execute typical instruction         | 1/1,000,000,000 sec = 1 nanosec |
+| CPU     | fetch from L1 cache memory          | 0.5 nanosec                     |
+| CPU     | branch misprediction                | 5 nanosec                       |
+| CPU     | fetch from L2 cache memory          | 7 nanosec                       |
+| RAM     | Mutex lock/unlock                   | 25 nanosec                      |
+| RAM     | fetch from main memory              | 100 nanosec                     |
+| Network | send 2K bytes over 1Gbps network    | 20,000 nanosec                  |
+| RAM     | read 1MB sequentially from memory   | 250,000 nanosec                 |
+| Disk    | fetch from new disk location (seek) | 8,000,000 nanosec (8ms)         |
+| Disk    | read 1MB sequentially from disk     | 20,000,000 nanosec (20ms)       |
+| Network | send packet US to Europe and back   | 150,000,000 nanosec (150ms)     |
 
 Peter Norvig first published these numbers in [Teach Yourself Programming in Ten Years](http://norvig.com/21-days.html#answers). While hardware continues to evolve, the relative relationships remain humbling for anyone who’s ever spent time optimizing the wrong thing.
 
@@ -120,14 +120,14 @@ The implementation reflects several engineering leadership principles. The threa
 Performance optimization discussions often remain theoretical without concrete measurements. For Hydra, the improvement was dramatic. Here’s a comparison between the run times for checking my website with a prototype single-thread program and using Hydra:
 
 ```text
-time python3 slow-link-check.py https://victoria.dev
+time python3 slow-link-check.py https://shahidkhan.dev
 
 real    17m34.084s
 user    11m40.761s
 sys     0m5.436s
 
 
-time python3 hydra.py https://victoria.dev
+time python3 hydra.py https://shahidkhan.dev
 
 real    0m15.729s
 user    0m11.071s

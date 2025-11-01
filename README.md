@@ -2,30 +2,10 @@
 
 Welcome to [shahidkhan.dev](https://shahidkhan.dev), my personal website and blog where I share my journey as a .NET AI Developer and Co-Founder of Dawloom. This site showcases my projects, technical writings, and university coursework.
 
-This site was built using the excellent [BLUF theme](https://github.com/victoriadrake/victoriadrake.github.io) by Victoria Drake.
-
-## Technical Features
-
 - **Static Site Generation**: Built with [Hugo](https://gohugo.io/) for speed and flexibility.
 - **Search Functionality**: Implemented using [Lunr.js](https://lunrjs.com).
 - **Illustrations**: I create all the illustrations and comics in my articles on my iPad.
 - **IndieWeb Integration**: I've implemented [microformats2](https://microformats.org/wiki/Main_Page) markup, making the site compatible with social readers and other IndieWeb sites.
-
-## Continuous Deployment
-
-The site is automatically deployed with each update using GitHub Pages and GitHub Actions.
-
-## Development Tools
-
-- **Link Checking**: I created [link-snitch](https://github.com/victoriadrake/link-snitch), a custom GitHub Action, to regularly check for broken links across the site. It's powered by [Hydra](https://github.com/victoriadrake/hydra-link-checker), a multithreaded Python site-crawling link checker built with the standard library.
-- **Code Quality**: I use the [pre-commit framework](https://pre-commit.com/) with [markdownlint-cli2](https://github.com/DavidAnson/markdownlint-cli2) to maintain content quality.
-- **Self-Documenting Makefile**: A [self-documenting Makefile](https://victoria.dev/posts/how-to-create-a-self-documenting-makefile/) helps streamline development workflows without having to remember command-line flags.
-
-## Contributions
-
-If you find a mistake or bug, please open an issue so it can be fixed!
-
-I don't accept guest blog posts or requests for placing links in posts.
 
 ## License
 
