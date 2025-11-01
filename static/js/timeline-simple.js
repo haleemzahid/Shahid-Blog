@@ -25,7 +25,6 @@
     const applyDateBtn = document.getElementById("applyDateFilter");
     const noResults = document.getElementById("noResults");
     const filteredClassesCount = document.getElementById("filteredClasses");
-
     // Filter buttons
     filterButtons.forEach((btn) => {
       btn.addEventListener("click", function () {
