@@ -1,6 +1,6 @@
 ---
 title: "Electrostatic"
-date: 2025-10-22T08:50:00
+date: 2025-10-29T08:50:00
 classTime: "08:50-09:40"
 location: "Examination Hall 2"
 topics: ["Charge", "Current", "Coloumb's Law"]

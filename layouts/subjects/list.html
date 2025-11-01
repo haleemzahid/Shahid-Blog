@@ -12,6 +12,59 @@
       </div>
     </div>
   </header>
+
+  <!-- Page Content -->
+  {{ if .Content }}
+  <div style="margin: 2rem 0;">
+    {{ .Content }}
+  </div>
+  {{ end }}
+
+  <!-- Course Outline Section -->
+  {{ if .Params.courseOutline }}
+  <section class="course-outline-section" style="margin: 3rem 0;">
+    <h2 style="font-size: 1.75rem; margin-bottom: 0.5rem;">📋 Course Outline</h2>
+    <p style="margin-bottom: 1.5rem; color: var(--gray-600, #666); font-size: 0.95rem;">Download the complete course outline and syllabus:</p>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 0; margin: 2rem 0;">
+      {{ range .Params.courseOutline }}
+      <a href="{{ .url }}" download class="outline-item" style="border: 2px solid var(--black); padding: 1.5rem; margin: -2px 0 0 -2px; text-decoration: none; color: inherit; transition: all 0.2s ease; display: flex; gap: 1rem; align-items: flex-start; min-height: 120px;">
+        {{ if eq .type "pdf" }}
+        <span style="font-size: 2.5rem;">📄</span>
+        {{ else if eq .type "docx" }}
+        <span style="font-size: 2.5rem;">📝</span>
+        {{ else if eq .type "image" }}
+        <span style="font-size: 2.5rem;">🖼️</span>
+        {{ else }}
+        <span style="font-size: 2.5rem;">📎</span>
+        {{ end }}
+        <div style="flex: 1;">
+          <h3 style="margin: 0 0 0.5rem 0; font-size: 1.1rem; font-weight: 600;">{{ .title }}</h3>
+          <p style="margin: 0 0 0.5rem 0; font-size: 0.9rem; line-height: 1.4;">{{ .description }}</p>
+          <small style="font-size: 0.8rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;">{{ .type }}{{ with .size }} • {{ . }}{{ end }}</small>
+        </div>
+      </a>
+      {{ end }}
+    </div>
+  </section>
+  <style>
+    .outline-item:hover {
+      background: var(--black);
+      color: var(--white);
+      z-index: 10;
+      transform: scale(1.02);
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+    }
+    @media (prefers-color-scheme: dark) {
+      .outline-item {
+        border-color: var(--white);
+      }
+      .outline-item:hover {
+        background: var(--white);
+        color: var(--black);
+      }
+    }
+  </style>
+  {{ end }}
   
   <!-- Search -->
   <div style="margin: 2rem 0;">
