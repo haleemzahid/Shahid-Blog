@@ -8,5 +8,5 @@ features = ["responsive", "fast", "clean"]
 min_version = "0.84.0"
 
 [author]
-  name = "Victoria Drake"
-  homepage = "https://victoria.dev"
+  name = "Shahid Khan"
+  homepage = "https://shahidkhan.dev"

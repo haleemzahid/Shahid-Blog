@@ -1,4 +1,3 @@
-Contact: security@victoria.dev
-Encryption: https://keybase.io/victoriadrake/key.asc
+Contact: shahidkhan.dev88@gmail.com
 Preferred-Languages: English
-Canonical: https://victoria.dev/security.txt
+Canonical: https://shahidkhan.dev/security.txt

@@ -1,6 +1,6 @@
-baseURL: https://victoria.dev/
+baseURL: https://shahidkhan.dev/
 languageCode: 'en-us'
-title: 'victoria.dev'
+title: 'Shahid Khan'
 theme: 'bluf'
 
 taxonomies:
@@ -38,35 +38,35 @@ params:
   dateTime: "2006-01-02"
   
   author:
-    name: Victoria Drake
-    title: Director of Engineering
-    tagline1: Principal Software Engineer
-    tagline2: Helping you build excellent products and happier teams.
+    name: Shahid Khan
+    title: .NET AI Developer & Co-Founder at Dawloom
+    tagline1: BS(AI) Student
+    tagline2: Building AI solutions with .NET and helping businesses worldwide
     image: /images/profile.png
-    email: hello@victoria.dev
-    domain: https://victoria.dev
+    email: shahidkhan.dev88@gmail.com
+    domain: https://shahidkhan.dev
   useToc: true
-  description: "Engineering leader, OWASP contributor, and educator helping millions of engineers build secure software for the next era of technology."
+  description: ".NET AI Developer and Co-Founder at Dawloom, BS(AI) student, building innovative AI solutions"
   logo: '/images/vd.svg'
   socialImage: '/images/social.png'
   social:
-    - url: 'https://x.com/victoriadotdev'
+    - url: 'https://x.com/shahid_khan_dev'
       icon: 'x.svg'
       name: 'X'
-    - url: 'https://github.com/victoriadrake/'
+    - url: 'https://github.com/Shahid-khan5/'
       icon: 'github.svg'
       name: 'Github'
-    - url: 'https://medium.com/@victoriadotdev/subscribe'
-      icon: 'email.png'
-      name: 'Email'
+    - url: 'https://wa.me/923349348631'
+      icon: 'whatsapp.svg'
+      name: 'WhatsApp'
     - url: '/index.xml'
       icon: 'rss.svg'
       name: 'RSS'
   plausible: true
   monetization: $ilp.uphold.com/pBRfRwg2EJAe
-  githubuser: victoriadrake
-  twitteruser: victoriadotdev
-  mastodon: https://mastodon.social/@victoriadotdev
+  githubuser: Shahid-khan5
+  twitteruser: shahid_khan_dev
+  mastodon: https://mastodon.social/@shahid_khan_dev
 
 outputFormats:
   EMAIL:

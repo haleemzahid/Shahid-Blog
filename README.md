@@ -1,8 +1,8 @@
-# What's All This?
+# Shahid Khan's Personal Website & Blog
 
-Welcome to [victoria.dev](https://victoria.dev), a personal website wholly created and owned by me, Victoria Drake. I've produced everything you see on the site—from research and writing to illustrations, design, code, and deployment.
+Welcome to [shahidkhan.dev](https://shahidkhan.dev), my personal website and blog where I share my journey as a .NET AI Developer and Co-Founder of Dawloom. This site showcases my projects, technical writings, and university coursework.
 
-The site is [open source](https://github.com/victoriadrake/victoriadrake.github.io), so feel free to explore how it works!
+This site was built using the excellent [BLUF theme](https://github.com/victoriadrake/victoriadrake.github.io) by Victoria Drake.
 
 ## Technical Features
 
