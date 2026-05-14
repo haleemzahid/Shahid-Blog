@@ -19,7 +19,7 @@ A full-featured C++ IDE built for students — write, compile, run, and debug C+
 
 ### Download
 
-<a href="https://github.com/haleemzahid/cpp-ide-android/releases/download/apk-latest/cpp-ide.apk" download="cpp-ide.apk" style="display:inline-block;padding:14px 32px;background:#007ACC;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:1.1em;margin:16px 0;">Download APK (v0.3)</a>
+<a href="https://github.com/haleemzahid/cpp-ide-android/releases/download/apk-latest/cpp-ide.apk" download="cpp-ide.apk" style="display:inline-block;padding:14px 32px;background:#007ACC;color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:1.1em;margin:16px 0;">Download APK (v0.4)</a>
 
 **Requirements:** Android 8.0+ (arm64 device)
 

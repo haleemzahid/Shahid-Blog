@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Pushes the cpp-ide APK to UploadThing and updates the download link.",
   "scripts": {
-    "upload": "node upload-apk.js"
+    "release": "node upload-apk.js",
+    "upload": "node upload-apk.js --skip-build"
   },
   "dependencies": {
     "uploadthing": "^7.4.0"
