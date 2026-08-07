@@ -1,5 +1,5 @@
 ---
-title: "C++ IDE — Privacy Policy"
+title: "C++ IDE - Privacy Policy"
 description: "How the C++ IDE for Android app handles your data."
 layout: page
 ---
@@ -55,9 +55,12 @@ operate. All requests are made over HTTPS.
 ## How long we keep it, and how to delete it
 
 We keep your account data for as long as your account exists. To delete your
-account and everything stored with it — chat messages and uploaded solutions
-included — email **shahidkhan.dev88@gmail.com** from the address you signed up
+account and everything stored with it, including chat messages and uploaded
+solutions, email **shahidkhan.dev88@gmail.com** from the address you signed up
 with. We will delete it within 30 days and confirm when it is done.
+
+Full instructions, and a pre-filled request link, are on the
+[account deletion page](https://shahidkhan.dev/cpp-ide-delete-account/).
 
 ## Children
 
